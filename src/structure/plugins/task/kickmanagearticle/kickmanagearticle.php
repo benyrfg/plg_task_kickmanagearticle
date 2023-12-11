@@ -80,19 +80,20 @@ class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 		$db            = Factory::getContainer()->get('DatabaseDriver');
 		$query         = $db->getQuery(true);
 		$now           = Factory::getDate('now', 'GMT');
-		$queryDate     = QueryHelper::getQueryDate($params->moveDate, $db);
-		$date          = new \DateInterval(sprintf('P%dY%dM%dDT%dH%dM', $params->years, $params->months, $params->days, $params->hours, $params->minutes));
-		$timeThreshold = (clone $now)->sub($date)->toSql();
-
+		
 		$query->select($db->quoteName('a.id'))
 			->from($db->quoteName('#__content', 'a'))
-			->where($queryDate . '< :threshold')
+			->join('INNER', $db->quoteName('#__fields_values', 'fv') . ' ON (' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fv.item_id') . ')')
 			->where($db->quoteName('a.catid') . ' = :categoryId')
-			->bind(':threshold', $timeThreshold, ParameterType::STRING)
-			->bind(':categoryId', $params->fromCatid, ParameterType::INTEGER);
-
+			->where($db->quoteName('fv.field_id') . ' = 20') // Add the condition for field_id = 20
+			->where('STR_TO_DATE(' . $db->quoteName('fv.value') . ', \'%d.%m.%Y %H:%i\') < :now') // Convert the date format
+			->bind(':categoryId', $params->fromCatid)
+			->bind(':now', $now->toSql());
+		
 		$db->setQuery($query);
 		$pks = $db->loadColumn();
+	
+	
 
 		if (count($pks) && $toCatid)
 		{
