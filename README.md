@@ -1,6 +1,6 @@
 # Kick manage article
 
-## Task Scheduler to move articles from cat a to cat b based on date-time value in custom field
+### Task Scheduler plugin to move articles from cat a to cat b based on date-time value in custom field
 
 This plugin is modification of the original plugin (https://github.com/Kicktemp/plg_task_kickmanagearticle) from Kicktemp.
 
