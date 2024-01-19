@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="task" method="upgrade">
 	<name>PLG_TASK_KICKMANAGEARTICLE</name>
-	<creationDate>[DATE]</creationDate>
-	<author>[AUTHOR]</author>
-	<authorEmail>[AUTHOR_EMAIL]</authorEmail>
-	<authorUrl>[AUTHOR_URL]</authorUrl>
-	<copyright>[COPYRIGHT]</copyright>
-	<license>[LICENSE]</license>
-	<version>[VERSION]</version>
+	<creationDate>18.07.2022</creationDate>
+	<author>Kicktemp GmbH</author>
+	<authorEmail>hello@kicktemp.com</authorEmail>
+	<authorUrl>https://kicktemp.com</authorUrl>
+	<copyright>Copyright © 2022 Kicktemp GmbH. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
 	<changelogurl>https://raw.githubusercontent.com/Kicktemp/plg_task_kickmanagearticle/main/changelog.xml</changelogurl>
 	<description>PLG_TASK_KICKMANAGEARTICLE_XML_DESCRIPTION</description>
 	<namespace path="src">Kicktemp\Plugin\Task\ManageArticle</namespace>
@@ -20,7 +20,7 @@
 	<config>
 	</config>
 	<updateservers>
-		<server type="extension" priority="1" name="[PROJECT_NAME]">
+		<server type="extension" priority="1" name="Kick Manage Article">
 			https://raw.githubusercontent.com/Kicktemp/plg_task_kickmanagearticle/main/update.xml
 		</server>
 	</updateservers>

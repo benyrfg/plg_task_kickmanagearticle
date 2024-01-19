@@ -21,6 +21,17 @@
 				required="true"
 				default=""
 			/>
+			<field
+				name="customField"
+				type="sql"
+				extension="com_content"
+				label="PLG_TASK_KICKMANAGEARTICLE_SELECT_CF"
+				required="true"
+				default=""
+				query="SELECT id, title FROM #__fields WHERE state=1"
+				key_field="id"
+				value_field="title"
+			/>
 		</fieldset>
 	</fields>
 </form>

@@ -1,11 +1,11 @@
 <?php
 /**
- * @package    [PROJECT_NAME]
+ * @package    Kick Manage Article
  *
- * @author     [AUTHOR] <[AUTHOR_EMAIL]>
- * @copyright  [COPYRIGHT]
- * @license    [LICENSE]
- * @link       [AUTHOR_URL]
+ * @author     Kicktemp GmbH <hello@kicktemp.com>
+ * @copyright  Copyright © 2022 Kicktemp GmbH. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @link       https://kicktemp.com
  */
 
 defined('_JEXEC') or die;
@@ -19,6 +19,7 @@ use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
+use Joomla\CMS\Log\Log;
 
 class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 {
@@ -75,6 +76,7 @@ class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 	{
 		$params  = $event->getArgument('params');
 		$toCatid = (int) $params->toCatid;
+		$cf = (int) $params->customField;
 
 		/** @var DatabaseDriver $db */
 		$db            = Factory::getContainer()->get('DatabaseDriver');
@@ -85,48 +87,37 @@ class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 			->from($db->quoteName('#__content', 'a'))
 			->join('INNER', $db->quoteName('#__fields_values', 'fv') . ' ON (' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fv.item_id') . ')')
 			->where($db->quoteName('a.catid') . ' = :categoryId')
-			->where($db->quoteName('fv.field_id') . ' = 20') // Add the condition for field_id = 20
+			->where($db->quoteName('fv.field_id') . ' = ' . $cf ) // the condition custom field
 			->where('STR_TO_DATE(' . $db->quoteName('fv.value') . ', \'%d.%m.%Y %H:%i\') < :now') // Convert the date format
 			->bind(':categoryId', $params->fromCatid)
 			->bind(':now', $now->toSql());
 		
 		$db->setQuery($query);
 		$pks = $db->loadColumn();
-	
-	
+
+		//$toLog = json_encode($pks);
+		//Log::add($toLog, Log::INFO, 'task');
+
 
 		if (count($pks) && $toCatid)
 		{
 			// Remove zero values resulting from input filter
 			$pks = array_filter($pks);
 
-			$batchVars = [
-				'category_id' => $toCatid,
-				'move_copy'   => 'm',
-			];
+			// SQL UPDATE query to move the articles  
+			$updateQuery = $db->getQuery(true);  
+			$updateQuery->update($db->quoteName('#__content'))  
+				->set($db->quoteName('catid') . ' = ' . $toCatid)  
+				->where($db->quoteName('id') . ' IN (' . implode(',', $pks) . ')');  
+	
+			try {  
+				$db->setQuery($updateQuery);  
+				$db->execute();  
+			} catch (\RuntimeException $e) {  
+				$this->logTask($e->getMessage(), 'error');  
+				return TaskStatus::NO_RUN;  
+			}  	
 
-			foreach ($pks as $id)
-			{
-				// If we're coming from com_categories, we need to use extension vs. option
-				$contexts[$id] = 'com_content.articles.' . $id;
-			}
-
-			try
-			{
-				/** @var \Joomla\Component\Content\Administrator\Model\ArticleModel $model */
-				$model = Factory::getApplication()->bootComponent('com_content')->getMVCFactory()->createModel('Article', 'Administrator', ['ignore_request' => true]);
-
-				if (!$model->batch($batchVars, $pks, $contexts))
-				{
-					return TaskStatus::NO_RUN;
-				}
-			}
-			catch (\RuntimeException $e)
-			{
-				$this->logTask($e->getMessage(), 'error');
-
-				return TaskStatus::NO_RUN;
-			}
 
 		}
 

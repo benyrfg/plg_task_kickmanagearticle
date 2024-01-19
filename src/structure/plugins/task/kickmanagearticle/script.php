@@ -1,11 +1,11 @@
 <?php
 /**
- * @package    [PACKAGE_NAME]
+ * @package    plg_task_kickmanagearticle
  *
- * @author     [AUTHOR] <[AUTHOR_EMAIL]>
- * @copyright  [AUTHOR_URL]
- * @license    [LICENSE]
- * @link       [AUTHOR_URL]
+ * @author     Kicktemp GmbH <hello@kicktemp.com>
+ * @copyright  https://kicktemp.com
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @link       https://kicktemp.com
  */
 
 defined('_JEXEC') or die;
