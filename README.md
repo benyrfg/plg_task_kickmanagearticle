@@ -13,7 +13,7 @@ You can set
 - category from witch you need articles to move
 - category to which articles should be moved
 - custom field name where the date-time value is stored
-- date-time format you use, the default is "%d.%m.%Y %H:%i
+- date-time format you use, the default is "%d.%m.%Y %H:%i"
 
 Then, you set the interval of the task run. When the time stored in the custom field is greater than the current time, the plugin moves the article from Category A to Category B.
 
