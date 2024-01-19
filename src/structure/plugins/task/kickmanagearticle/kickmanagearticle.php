@@ -77,6 +77,7 @@ class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 		$params  = $event->getArgument('params');
 		$toCatid = (int) $params->toCatid;
 		$cf = (int) $params->customField;
+		$format = $params->dateFormat;
 
 		/** @var DatabaseDriver $db */
 		$db            = Factory::getContainer()->get('DatabaseDriver');
@@ -88,7 +89,7 @@ class plgTaskKickManageArticle extends CMSPlugin implements SubscriberInterface
 			->join('INNER', $db->quoteName('#__fields_values', 'fv') . ' ON (' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fv.item_id') . ')')
 			->where($db->quoteName('a.catid') . ' = :categoryId')
 			->where($db->quoteName('fv.field_id') . ' = ' . $cf ) // the condition custom field
-			->where('STR_TO_DATE(' . $db->quoteName('fv.value') . ', \'%d.%m.%Y %H:%i\') < :now') // Convert the date format
+			->where('STR_TO_DATE(' . $db->quoteName('fv.value') . ', \'' . $format . '\') < :now') // Convert the date format
 			->bind(':categoryId', $params->fromCatid)
 			->bind(':now', $now->toSql());
 		

@@ -32,6 +32,15 @@
 				key_field="id"
 				value_field="title"
 			/>
+			<field
+				name="dateFormat"
+				type="text"
+				label="PLG_TASK_KICKMANAGEARTICLE_FORMAT_LABEL"
+				default="%d.%m.%Y %H:%i"
+				required="true"
+				description="PLG_TASK_KICKMANAGEARTICLE_FORMAT_DESC"
+				
+			/>
 		</fieldset>
 	</fields>
 </form>

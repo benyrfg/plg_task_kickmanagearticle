@@ -8,7 +8,6 @@
 	<copyright>Copyright © 2022 Kicktemp GmbH. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>1.0.0</version>
-	<changelogurl>https://raw.githubusercontent.com/Kicktemp/plg_task_kickmanagearticle/main/changelog.xml</changelogurl>
 	<description>PLG_TASK_KICKMANAGEARTICLE_XML_DESCRIPTION</description>
 	<namespace path="src">Kicktemp\Plugin\Task\ManageArticle</namespace>
 	<scriptfile>script.php</scriptfile>
@@ -19,9 +18,5 @@
 	</files>
 	<config>
 	</config>
-	<updateservers>
-		<server type="extension" priority="1" name="Kick Manage Article">
-			https://raw.githubusercontent.com/Kicktemp/plg_task_kickmanagearticle/main/update.xml
-		</server>
-	</updateservers>
+
 </extension>
