@@ -5,8 +5,6 @@
 Typical Use Case:
 Consider a scenario where you have events, and there's a need to automatically relocate past events from the "Future Events" category to the "Past Events" category.
 
-This plugin is modification of the original plugin (https://github.com/Kicktemp/plg_task_kickmanagearticle) from Kicktemp.
-
 ### How it works
 
 You can set 
@@ -18,3 +16,5 @@ You can set
 Then, you set the interval of the task run. When the time stored in the custom field is greater than the current time, the plugin moves the article from Category A to Category B.
 
 Compatibillity: Joomla 4/5
+
+This plugin is modification of the original plugin (https://github.com/Kicktemp/plg_task_kickmanagearticle) from Kicktemp.
