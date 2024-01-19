@@ -1,6 +1,9 @@
-# Kick manage article
+# Kick manage articles
 
-### Task Scheduler plugin to move articles from cat a to cat b based on date-time value in custom field
+### Task Scheduler plugin for Joomla to move articles from categoy A to category B based on date-time value in custom field.
+
+Typical Use Case:
+Consider a scenario where you have events, and there's a need to automatically relocate past events from the "Future Events" category to the "Past Events" category.
 
 This plugin is modification of the original plugin (https://github.com/Kicktemp/plg_task_kickmanagearticle) from Kicktemp.
 
