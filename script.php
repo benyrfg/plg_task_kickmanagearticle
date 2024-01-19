@@ -29,12 +29,5 @@ class plgTaskKickManageArticleInstallerScript
 		$this->dir = __DIR__;
 	}
 
-	/**
-	 * Called on installation
-	 *
-	 * @return  boolean  True on success
-	 */
-	public function install() {
-		Factory::getDBO()->setQuery("UPDATE #__extensions SET enabled = 1 WHERE type = 'plugin' AND folder = 'task' AND element = 'kickmanagearticle'")->execute();
-	}
+
 }
